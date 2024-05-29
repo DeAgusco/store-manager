@@ -1,0 +1,82 @@
+.shipments {
+  background-color: #ffffffb4;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0.5px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  width: 66.66vw;
+}
+
+.shipments-header {
+  margin-bottom: 20px;
+}
+
+.shipments-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+.shipments-stats {
+  display: flex;
+  justify-content: space-between;
+  width: 66.66vw;
+}
+
+.shipments-stat {
+  text-align: center;
+  flex: 1;
+  margin: 0 10px;
+  border-radius: 8px;
+  background-color: #f9fafc;
+  padding: 20px;
+  box-shadow: 0.5px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.shipments-stat:hover {
+  position: relative;
+  top: -5px;
+  cursor: pointer;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  top: -35px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  width: 10px;
+  height: 10px;
+  box-shadow: 0.5px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Center the icon container horizontally */
+  border: 1px solid #e7e3e3; /* Add border lines */
+}
+
+.shipments-stat h3 {
+  margin: 0;
+  font-size: 2rem;
+  color: #34495e;
+}
+
+.shipments-stat p {
+  margin: 5px 0;
+  color: #7f8c8d;
+}
+
+.stat-change {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.stat-change.positive {
+  color: #2ecc71;
+}
+
+.stat-change.negative {
+  color: #e74c3c;
+}
