@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaBox, FaShippingFast, FaChartBar, FaEnvelope, FaSync, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaBox, FaShippingFast, FaSignOutAlt } from 'react-icons/fa';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -17,15 +17,6 @@ const Sidebar = () => {
         </li>
         <li className="sidebar-item">
           <FaShippingFast />
-        </li>
-        <li className="sidebar-item">
-          <FaChartBar />
-        </li>
-        <li className="sidebar-item">
-          <FaEnvelope />
-        </li>
-        <li className="sidebar-item">
-          <FaSync />
         </li>
       </ul>
       <div className="sidebar-item-bottom">
