@@ -1,10 +1,10 @@
 import React from 'react';
-import AllEmployees from './AllEmployees';
+import AllProducts from './AllProducts';
 
 function App() {
   return (
     <div className="App">
-      <AllEmployees />
+      <AllProducts />
     </div>
   );
 }

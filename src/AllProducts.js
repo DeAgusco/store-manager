@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './AllProducts.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const products = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
@@ -12,6 +14,11 @@ const products = Array.from({ length: 100 }, (_, index) => ({
 
 const AllProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalProduct, setModalProduct] = useState(null);
+  const [actionType, setActionType] = useState('');
+  const [quantity, setQuantity] = useState(0);
+
   const productsPerPage = 20;
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -19,6 +26,30 @@ const AllProducts = () => {
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleIconClick = (product, type) => {
+    setModalProduct(product);
+    setActionType(type);
+    setModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    setQuantity(0);
+  };
+
+  const handleQuantityChange = (e) => {
+    setQuantity(e.target.value);
+  };
+
+  const handleModalSubmit = () => {
+    if (actionType === 'add') {
+      console.log(`Adding ${quantity} to ${modalProduct.name}`);
+    } else if (actionType === 'remove') {
+      console.log(`Removing ${quantity} from ${modalProduct.name}`);
+    }
+    handleModalClose();
+  };
 
   return (
     <div className="all-products">
@@ -32,6 +63,7 @@ const AllProducts = () => {
             <th>Price</th>
             <th>Amount in Stock</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +79,10 @@ const AllProducts = () => {
                 </div>
               </td>
               <td className={product.status === 'In Stock' ? 'in-stock' : 'out-of-stock'}>{product.status}</td>
+              <td>
+                <FontAwesomeIcon icon={faPlus} onClick={() => handleIconClick(product, 'add')} className="action-icon" />
+                <FontAwesomeIcon icon={faMinus} onClick={() => handleIconClick(product, 'remove')} className="action-icon" />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -58,6 +94,16 @@ const AllProducts = () => {
           </button>
         ))}
       </div>
+      {modalVisible && (
+        <div className="modal">
+          <div className="modal-content">
+            <h4>{actionType === 'add' ? 'Add Quantity' : 'Remove Quantity'} for {modalProduct.name}</h4>
+            <input type="number" value={quantity} onChange={handleQuantityChange} placeholder="Quantity" />
+            <button onClick={handleModalSubmit}>{actionType === 'add' ? 'Add' : 'Remove'}</button>
+            <button onClick={handleModalClose}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
