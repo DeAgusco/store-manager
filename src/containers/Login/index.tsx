@@ -103,7 +103,7 @@ const Login = () => {
 
           <div className="flex justify-end py-5">
             <Button type="submit">
-                  Continue
+                 Login
             </Button>
           </div>
 

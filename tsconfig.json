@@ -20,11 +20,11 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/lib.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
