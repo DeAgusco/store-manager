@@ -18,6 +18,10 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod"
+import { loginUser } from "@/services/Loginservice";
+import toast, { Toaster } from 'react-hot-toast';
+import { ClipLoader } from "react-spinners";
+import { useState } from "react";
 
 const formSchema = z.object({
     employee_id: z.string().min(1, {
@@ -40,13 +44,37 @@ const formSchema = z.object({
 
 
 const Login = () => {
+  const [Loading, setLoading] = useState(false)
     
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-       console.log(values);
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+      try {
+        setLoading(true)
+        const { employee_id, owner_id, email, password  } = values
+        const res = await loginUser({
+          employee_id, 
+          owner_id, 
+          email, 
+          password
+        })
+
+        console.log('res =>', res);
+        if (res.status === '200') {
+            toast.success("Login Successful");
+            window.location.href = "/dashboard"
+            setLoading(false)
+        } else {
+            setLoading(false)
+            toast.error(res?.response?.data?.message || "Error Loging in");
+        }
+      } catch (error) {
+        setLoading(false)
+        console.log(error);
+        toast.error(error?.response?.data?.message || "Error Loging in");
+      }
     }
 
   return (
@@ -121,15 +149,21 @@ const Login = () => {
           </div>
 
           <div className="flex justify-center py-5">
-            <Button type="submit" className="w-full text-white">
+            {Loading ? (
+                <ClipLoader size={30} color="#f87171" />
+            ) : (
+              <Button type="submit" className="w-full text-white transition duration-700 ease-in-out hover:scale-110">
                  Login
-            </Button>
+              </Button>
+            )}
           </div>
 
         </form>
         </Form>
       </CardContent>
     </Card>
+
+    <Toaster />
     </div>
   )
 }

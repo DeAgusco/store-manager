@@ -57,7 +57,7 @@ const AddProduct = () => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button variant="outline" className='w-full'>Add Product</Button>
+          <Button variant="outline" className='w-full transition duration-700 ease-in-out hover:scale-110'>Add Product</Button>
         </CardFooter>
       </Card>
       </div>
