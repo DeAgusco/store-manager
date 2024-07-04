@@ -81,13 +81,13 @@ const data: Product[] = [
   ]
 
 export const columns: ColumnDef<Product>[] = [
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("status")}</div>
-      ),
-    },
+    // {
+    //   accessorKey: "status",
+    //   header: "Status",
+    //   cell: ({ row }) => (
+    //     <div className="capitalize">{row.getValue("status")}</div>
+    //   ),
+    // },
     {
       accessorKey: "product",
       header: ({ column }) => {

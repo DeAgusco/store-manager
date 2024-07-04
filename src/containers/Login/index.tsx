@@ -47,7 +47,13 @@ const Login = () => {
   const [Loading, setLoading] = useState(false)
     
     const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema)
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+          employee_id: "",
+          owner_id: "",
+          email: "",
+          password: "",
+        }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -64,7 +70,8 @@ const Login = () => {
         if (res.status === 200) {
             toast.success("Login Successful");
             localStorage.setItem('user_name', res?.data?.name);
-            window.location.href = "/dashboard"
+            localStorage.setItem('shopID', res?.data?.shop_id);
+             window.location.href = "/dashboard"
             setLoading(false)
         } else {
             setLoading(false)

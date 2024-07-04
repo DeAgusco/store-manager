@@ -9,7 +9,7 @@ export type LoginUserTypes  = {
     id?: string
     name: string,
     price: string,
-    status: string,
+    status?: string,
     quantity: number
   }
   
