@@ -54,6 +54,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("user_name")
+    localStorage.removeItem("user_token")
+    localStorage.removeItem("productID")
+    window.location.href = '/'
+}
+
   return (
     <aside
       ref={sidebar}
@@ -206,6 +213,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/"
+                  onClick={handleLogout}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
                   }`}

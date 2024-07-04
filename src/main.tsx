@@ -9,6 +9,7 @@ import './index.css'
 import AllProducts from './containers/AllProducts';
 import EditProduct from './containers/EditProduct';
 import AddProduct from './containers/AddProducts';
+import PrivateRoute from './HOC/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -18,22 +19,38 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard  />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/dashboard/allproduct",
-    element: <AllProducts  />,
+    element: (
+      <PrivateRoute>
+        <AllProducts />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/dashboard/edit/product/:id",
-    element: <EditProduct  />,
+    element: (
+      <PrivateRoute>
+        <EditProduct />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/dashboard/add/product",
-    element: <AddProduct />,
+    element: (
+      <PrivateRoute>
+        <AddProduct />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
   },
 ])

@@ -17,9 +17,9 @@ export const loginUser = async ({
       const _token = res?.data?.token
       axiosInstance.defaults.headers.common["Authorization"] = _token;
       saveToken(USER_TOKEN_NAME, _token)
-      return res?.data
+      return res
     } catch (error) {
-      console.log("error in registerUser", error)
-      throw error
+      //console.log("error in registerUser", error)
+      return error
     }
   }

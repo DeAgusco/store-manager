@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const Username = localStorage.getItem('user_name')
+
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -36,6 +38,13 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+  const handleLogout = () => {
+      localStorage.removeItem("user_name")
+      localStorage.removeItem("user_token")
+      localStorage.removeItem("productID")
+      window.location.href = '/'
+  }
+
   return (
     <div className="relative">
       <Link
@@ -46,9 +55,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+             {Username}
           </span>
-          <span className="block text-xs">Owner</span>
+          {/* <span className="block text-xs">Owner</span> */}
         </span>
 
         <span className="h-12 w-12 flex items-center justify-center rounded-full">
@@ -81,7 +90,7 @@ const DropdownUser = () => {
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button onClick={handleLogout} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"

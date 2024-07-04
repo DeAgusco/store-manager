@@ -61,19 +61,19 @@ const Login = () => {
           password
         })
 
-        console.log('res =>', res);
-        if (res.status === '200') {
+        if (res.status === 200) {
             toast.success("Login Successful");
+            localStorage.setItem('user_name', res?.data?.name);
             window.location.href = "/dashboard"
             setLoading(false)
         } else {
             setLoading(false)
-            toast.error(res?.response?.data?.message || "Error Loging in");
+            toast.error(res?.response?.data?.detail || "Error Loging in");
         }
       } catch (error) {
         setLoading(false)
         console.log(error);
-        toast.error(error?.response?.data?.message || "Error Loging in");
+        toast.error(error?.response?.data?.detail || "Error Loging in");
       }
     }
 
