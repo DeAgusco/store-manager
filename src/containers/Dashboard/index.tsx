@@ -1,10 +1,10 @@
 import DefaultLayout from "../DefaultLayout"
-import ChartOne from '@/components/Charts/ChartOne';
-import ChartThree from '@/components/Charts/ChartThree';
-import ChartTwo from '@/components/Charts/ChartTwo';
+// import ChartOne from '@/components/Charts/ChartOne';
+// import ChartThree from '@/components/Charts/ChartThree';
+// import ChartTwo from '@/components/Charts/ChartTwo';
 import CardDataStats from '@/components/CardDataStats';
 import TableOne from '@/components/Tables/TableOne';
-import ChatCard from '@/components/Chat/ChatCard';
+// import ChatCard from '@/components/Chat/ChatCard';
 
 const Dashboard = () => {
   return (
@@ -97,13 +97,13 @@ const Dashboard = () => {
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
+        {/* <ChartOne />
         <ChartTwo />
-        <ChartThree />
+        <ChartThree /> */}
         <div className="col-span-12 xl:col-span-8">
           <TableOne />
         </div>
-        <ChatCard />
+        {/* <ChatCard /> */}
       </div>
     </DefaultLayout>
   )

@@ -6,6 +6,9 @@ import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
 import './App.css'
 import './index.css'
+import AllProducts from './containers/AllProducts';
+import EditProduct from './containers/EditProduct';
+import AddProduct from './containers/AddProducts';
 
 const router = createBrowserRouter([
   {
@@ -14,8 +17,23 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/dashboard/*",
+    path: "/dashboard",
     element: <Dashboard  />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/dashboard/allproduct",
+    element: <AllProducts  />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/dashboard/edit/product/:id",
+    element: <EditProduct  />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/dashboard/add/product",
+    element: <AddProduct />,
     errorElement: <ErrorPage />,
   },
 ])

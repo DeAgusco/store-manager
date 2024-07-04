@@ -20,16 +20,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod"
 
 const formSchema = z.object({
-    employee_id: z.number().min(1, {
+    employee_id: z.string().min(1, {
       message: "Employee ID is required",
     }),
 
+    owner_id: z.string().min(1, {
+      message: "Owner ID is required",
+    }),
+
+
     email: z.string().email({
-     message: "email is required",
+     message: "Email is required",
     }),
 
     password: z.string().min(1, {
-        message: "password is required",
+        message: "Password is required",
       }),
 })
 
@@ -56,6 +61,20 @@ const Login = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
+            <FormField
+                control={form.control}
+                name="owner_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Owner ID</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Owner ID"  {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="employee_id"
@@ -101,8 +120,8 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex justify-end py-5">
-            <Button type="submit">
+          <div className="flex justify-center py-5">
+            <Button type="submit" className="w-full text-white">
                  Login
             </Button>
           </div>
