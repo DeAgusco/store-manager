@@ -66,7 +66,7 @@ const AddProduct = () => {
 
   const shopID = localStorage.getItem('shopID');
 
-  const { trigger } = useSWRMutation("/shop/product/create", createProductRequest)
+  const { trigger } = useSWRMutation("/store/product/create/", createProductRequest)
   const { mutate } = useSWRConfig()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -99,7 +99,7 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     }
     try {
        await trigger({ ...payLoad });
-       const res = await mutate("shop/product/create");
+       const res = await mutate("store/product/create/");
       if (res?.status === 200) {
         toast.success(res?.response?.data.detail || "Product added successfully!");
       } else {
