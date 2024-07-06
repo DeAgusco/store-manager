@@ -5,7 +5,7 @@ import { updateProductType } from '@/types/User'
 //shop/product/update
  const updateProductRequest = async (url: string, { arg }: { arg: updateProductType }) => {
   try {
-   const res = await axiosInstance.put(url + "/" + arg.id, {
+   const res = await axiosInstance.put(url + "/" + arg.id + '/', {
       ...arg,
     })
   return res;
@@ -34,7 +34,7 @@ const createProductRequest = async (url: string, { arg }: { arg: updateProductTy
   { arg }: { arg: { id: string } }
 ) => {
   try {
-    await axiosInstance.delete(url + "/" + arg.id)
+    await axiosInstance.delete(url + "/" + arg.id + "/")
   } catch (error) {
     console.log("error in deleteTaskRequest", error)
     throw error

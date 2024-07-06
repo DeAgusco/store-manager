@@ -67,7 +67,7 @@ export const columns: ColumnDef<Product>[] = [
           </Button>
         )
       },
-      cell: ({ row }) => <div className="uppercase">{row.getValue("name")}</div>,
+      cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
     },
     {
         accessorKey: "quantity",
@@ -82,7 +82,7 @@ export const columns: ColumnDef<Product>[] = [
             </Button>
           )
         },
-        cell: ({ row }) => <div className="uppercase">{row.getValue("quantity")}</div>,
+        cell: ({ row }) => <div className="capitalize">{row.getValue("quantity")}</div>,
       },
     {
       accessorKey: "price",
@@ -122,7 +122,7 @@ export const columns: ColumnDef<Product>[] = [
                   window.location.href = `/dashboard/edit/product/:${product.id}`
                 }}
               >
-                Edit Item
+                Edit / Delete Item
               </DropdownMenuItem>
               {/* <DropdownMenuItem>View payment details</DropdownMenuItem> */}
             </DropdownMenuContent>
@@ -141,13 +141,11 @@ const AllProducts = () => {
     const [rowSelection, setRowSelection] = useState({})
 
 
-    const { data: product = { results: [] }, isLoading } = useSWR<unknown>(`store/product/list/`, fetcher)
+    const { data: product = [], isLoading } = useSWR<Product>(`store/product/list/`, fetcher)
     
-    const { results } = product as { results: Product[] }
-
      
     const table = useReactTable({
-        data: results || [],
+        data: product,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,

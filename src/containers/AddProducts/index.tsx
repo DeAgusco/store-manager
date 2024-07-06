@@ -102,8 +102,9 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
     await trigger({ ...payLoad });
     await mutate("store/product/create/");
     toast.success("Product added successfully!");
+    
   } catch (error) {
-    toast.error("Failed to add product " + (error.response?.data?.details));
+    toast.error("Failed to add product shop id required  " + (error.response?.data?.details));
   } finally {
     setLoading(false);
   }
