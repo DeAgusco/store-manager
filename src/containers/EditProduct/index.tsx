@@ -127,6 +127,9 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       await triggerDelete({ id: productID })
       await mutate("shop/product/delete")
       toast.success("Product Deleted successfully!");
+      setTimeout(() => {
+        window.location.href = '/dashboard/allproduct';
+      }, 1000);
     } catch (err) {
       toast.error(err?.response?.data.detail);
       throw err

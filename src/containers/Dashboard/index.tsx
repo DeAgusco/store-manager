@@ -5,12 +5,26 @@ import ChartThree from '@/components/Charts/ChartThree';
 import CardDataStats from '@/components/CardDataStats';
 import TableOne from '@/components/Tables/TableOne';
 // import ChatCard from '@/components/Chat/ChatCard';
+import { analytics } from "@/types/dashboard";
+import { fetcher } from '@/services/UpdateItemService'
+import useSWR from "swr"
+import Loader from '@/common/Loader';
+
 
 const Dashboard = () => {
+  const shopID = localStorage.getItem('shopID');
+
+  //const { data: dashboard, isLoading } = useSWR<unknown>(`store/detail/${shopID}/`, fetcher)
+  const { data: analytics, isLoading: loadingAnalytics } = useSWR<analytics>(`store/analytics/`, fetcher) 
+
+  console.log(analytics);
+
   return (
     <DefaultLayout>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
+       {loadingAnalytics ? (<Loader/>) : (
+      <>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <CardDataStats title="Total Cost" total={`GHC ${analytics?.total_cost}`} rate="0.43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -29,7 +43,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Profit" total="$45,2K" rate="4.35%" levelUp>
+        <CardDataStats title="Total Sales" total={`GHC ${analytics?.total_sales}`}  rate="4.35%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -52,7 +66,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Product" total="2.450" rate="2.59%" levelUp>
+        <CardDataStats title="Total Products" total={`GHC ${analytics?.total_products}`} rate="2.59%"  levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -71,7 +85,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Users" total="3.456" rate="0.95%" levelDown>
+        <CardDataStats title="Total Employee Sales" total={`GHC ${analytics?.total_sales_by_employee}`} rate="0.95%" levelDown>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -103,6 +117,8 @@ const Dashboard = () => {
          <TableOne />
         {/* <ChatCard /> */}
       </div>
+    </>
+       )}
     </DefaultLayout>
   )
 }
