@@ -5,9 +5,10 @@ import { updateProductType } from '@/types/User'
 //shop/product/update
  const updateProductRequest = async (url: string, { arg }: { arg: updateProductType }) => {
   try {
-    await axiosInstance.put(url + "/" + arg.id, {
+   const res = await axiosInstance.put(url + "/" + arg.id, {
       ...arg,
     })
+  return res;
   } catch (error) {
     console.log("error in updateTaskRequest", error)
     throw error
@@ -17,11 +18,12 @@ import { updateProductType } from '@/types/User'
 //shop/product/create
 const createProductRequest = async (url: string, { arg }: { arg: updateProductType }) => {
   try {
-    await axiosInstance.post(url, {
+   const res = await axiosInstance.post(url, {
       ...arg,
     })
+    return res;
   } catch (error) {
-    console.log("error in updateTaskRequest", error)
+    console.log("error in createProductRequest", error)
     throw error
   }
 }

@@ -34,6 +34,7 @@ import { updateProductRequest, deleteProductRequest, fetcher } from '@/services/
 import useSWR, { useSWRConfig } from "swr"
 import useSWRMutation from "swr/mutation"
 import { updateProductType } from '@/types/User'
+import Loader from '@/common/Loader';
 
 
 const formSchema = z.object({
@@ -67,14 +68,13 @@ const EditProduct = () => {
   const productID = localStorage.getItem('productID');
   const shopID = localStorage.getItem('shopID');
 
-  const { trigger } = useSWRMutation("/shop/product/create", updateProductRequest)
+  const { trigger } = useSWRMutation("/store/product/create", updateProductRequest)
 
-  const { trigger: triggerDelete } = useSWRMutation("/shop/product/delete", deleteProductRequest)
+  const { trigger: triggerDelete } = useSWRMutation("/store/product/delete", deleteProductRequest)
     
-  const { data: product, isLoading } = useSWR<updateProductType>(`shop/product/${productID}`, fetcher)
+  const { data: product,  isLoading } = useSWR<updateProductType>(`/store/product/${productID}`, fetcher)
 
-  console.log('product =>', product)
-
+ 
   const { mutate } = useSWRConfig()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -99,7 +99,7 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const payLoad = {
-      shopID,
+      shop: shopID,
       name: values.name,
       price: values.price,
       quantity: quantity,
@@ -107,19 +107,14 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true)
     try {
       await trigger({ ...payLoad })
-      const res = await mutate("shop/product/update")
-      if (res?.status === 200) {
-        toast.success(res?.response?.data.detail || "Product Edited successfully!");
-        setLoading(false)
-      } else {
-        setLoading(false)
-        toast.error(res?.response?.data.detail);
-        throw new Error(res?.response?.data.detail);
-      }
+      await mutate("shop/product/update")
+      toast.success("Product Edited successfully!");
     } catch (error) {
       setLoading(false)
-      console.log("error in updateProductRequest", error)
+      toast.error("Failed to add product " + (error.response?.data?.details));
       throw error
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -129,20 +124,21 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       await triggerDelete({
         id: productID,
       })
-      const res = await mutate("shop/product/delete")
-      if (res?.status === 200) {
-        toast.success(res?.response?.data.detail || "Product Deleted successfully!");
-      } else {
-        toast.error(res?.response?.data.detail);
-        throw new Error(res?.response?.data.detail);
-      }
+      await mutate("shop/product/delete")
+      toast.success("Product Deleted successfully!");
       setdeleteLoading(false)
-    } catch (error) {
+    } catch (err) {
       setdeleteLoading(false)
-      console.log("error in deleteProductRequest", error)
-      throw error
+      toast.error(err?.response?.data.detail);
+      console.log("error in deleteProductRequest", err)
+      throw err
+    } finally {
+      setdeleteLoading(false)
     }
-    setdeleteLoading(false)
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (

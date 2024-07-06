@@ -89,32 +89,25 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   }
 }
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setLoading(true);
-    const payLoad = {
-      shopID,
-      name: values.name,
-      price: values.price,
-      quantity: quantity,
-    }
-    try {
-       await trigger({ ...payLoad });
-       const res = await mutate("store/product/create/");
-      if (res?.status === 200) {
-        toast.success(res?.response?.data.detail || "Product added successfully!");
-      } else {
-        toast.error(res?.response?.data.detail);
-        throw new Error(res?.response?.data.detail);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log("error in createProductRequest", error);
-      const errorMessage = error.response?.data?.detail  || "Failed to add product. Please try again.";
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-    }
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  setLoading(true);
+  const payLoad = {
+    shop: shopID,
+    name: values.name,
+    price: values.price,
+    quantity: quantity,
+  };
+
+  try {
+    await trigger({ ...payLoad });
+    await mutate("store/product/create/");
+    toast.success("Product added successfully!");
+  } catch (error) {
+    toast.error("Failed to add product " + (error.response?.data?.details));
+  } finally {
+    setLoading(false);
   }
+};
 
   return (
     <DefaultLayout>

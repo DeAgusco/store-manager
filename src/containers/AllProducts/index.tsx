@@ -1,4 +1,3 @@
-import * as React from "react"
 import DefaultLayout from "../DefaultLayout";
 import {
     ColumnDef,
@@ -32,53 +31,20 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import  { ChevronDown, MoreHorizontal } from "lucide-react"
+import { useState } from "react";
+import { fetcher } from '@/services/UpdateItemService'
+import useSWR from "swr"
+import Loader from '@/common/Loader';
 
 
 export type Product = {
     id: string
-    Price: number
-    status: "pending" | "processing" | "success" | "canceled"
-    product: string
+    price: number
+    status?: "pending" | "processing" | "success" | "canceled"
+    name: string
     quantity: number
   }
 
-const data: Product[] = [
-    {
-      id: "m5gr84i9",
-      Price: 316,
-      status: "success",
-      product: "Coca-Cola",
-      quantity: 12,
-    },
-    {
-      id: "3u1reuv4",
-      Price: 242,
-      status: "success",
-      product: "Short Bread",
-      quantity:32,
-    },
-    {
-      id: "derv1ws0",
-      Price: 837,
-      status: "processing",
-      product: "Tin Milk",
-      quantity:32,
-    },
-    {
-      id: "5kma53ae",
-      Price: 874,
-      status: "success",
-      product: "Malta Guniess",
-      quantity:32,
-    },
-    {
-      id: "bhqecj4p",
-      Price: 721,
-      status: "canceled",
-      product: "Masked Beans",
-      quantity:32,
-    },
-  ]
 
 export const columns: ColumnDef<Product>[] = [
     // {
@@ -89,7 +55,7 @@ export const columns: ColumnDef<Product>[] = [
     //   ),
     // },
     {
-      accessorKey: "product",
+      accessorKey: "name",
       header: ({ column }) => {
         return (
           <Button
@@ -101,7 +67,7 @@ export const columns: ColumnDef<Product>[] = [
           </Button>
         )
       },
-      cell: ({ row }) => <div className="uppercase">{row.getValue("product")}</div>,
+      cell: ({ row }) => <div className="uppercase">{row.getValue("name")}</div>,
     },
     {
         accessorKey: "quantity",
@@ -119,10 +85,10 @@ export const columns: ColumnDef<Product>[] = [
         cell: ({ row }) => <div className="uppercase">{row.getValue("quantity")}</div>,
       },
     {
-      accessorKey: "Price",
+      accessorKey: "price",
       header: () => <div className="text-right">Price</div>,
       cell: ({ row }) => {
-        const Price = parseFloat(row.getValue("Price"))
+        const Price = parseFloat(row.getValue("price"))
    
         // Format the Price as a dollar Price
         const formatted = new Intl.NumberFormat("en-US", {
@@ -169,13 +135,19 @@ export const columns: ColumnDef<Product>[] = [
 
 
 const AllProducts = () => {
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = React.useState({})
+    const [sorting, setSorting] = useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+    const [rowSelection, setRowSelection] = useState({})
 
+
+    const { data: product = { results: [] }, isLoading } = useSWR<unknown>(`store/product/list/`, fetcher)
+    
+    const { results } = product as { results: Product[] }
+
+     
     const table = useReactTable({
-        data,
+        data: results || [],
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -192,16 +164,20 @@ const AllProducts = () => {
           rowSelection,
         },
       })
+  
     
   return (
    <DefaultLayout>
-    <div className="w-full">
+    {isLoading ? (
+       <Loader />
+    ) : (
+      <div className="w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter products..."
-          value={(table.getColumn("product")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("product")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -283,10 +259,10 @@ const AllProducts = () => {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        {/* <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
+        </div> */}
         <div className="space-x-2">
           <Button
             variant="outline"
@@ -307,6 +283,8 @@ const AllProducts = () => {
         </div>
       </div>
     </div>
+    )}
+    
    </DefaultLayout>
   )
 }
