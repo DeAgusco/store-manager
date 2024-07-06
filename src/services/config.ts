@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const BASE_URL = "https://store-manager-backend-eta.vercel.app";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const TIME_OUT = 50000;
 export const USER_TOKEN_NAME = "user_token";
-const CSRF_TOKEN_URL = `${BASE_URL}/employee/get-csrf-token/`; // Replace with your endpoint URL
+const CSRF_TOKEN_URL = import.meta.env.VITE_CSRF_TOKEN_URL;
 
 const axiosInstance = axios.create({
     xsrfCookieName: 'csrftoken', // Match Django setting
