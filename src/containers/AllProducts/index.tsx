@@ -35,17 +35,9 @@ import { useState } from "react";
 import { fetcher } from '@/services/UpdateItemService'
 import useSWR from "swr"
 import Loader from '@/common/Loader';
+import { Product } from "@/types/product";
 
-
-export type Product = {
-    id: string
-    price: number
-    status?: "pending" | "processing" | "success" | "canceled"
-    name: string
-    quantity: number
-  }
-
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const columns: ColumnDef<Product>[] = [
     // {
     //   accessorKey: "status",
@@ -56,7 +48,7 @@ export const columns: ColumnDef<Product>[] = [
     // },
     {
       accessorKey: "name",
-      header: ({ column }) => {
+      header: () => {
         return (
           <Button
             variant="ghost"
@@ -71,7 +63,7 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "quantity",
-        header: ({ column }) => {
+        header: () => {
           return (
             <Button
               variant="ghost"
@@ -104,7 +96,8 @@ export const columns: ColumnDef<Product>[] = [
       enableHiding: false,
       cell: ({ row }) => {
         const product = row.original
-   
+
+ 
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -118,7 +111,7 @@ export const columns: ColumnDef<Product>[] = [
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer"
                 onClick={() => {
-                  localStorage.setItem('productID', product.id)
+                  localStorage.setItem('productID', product?.id?.toString())
                   window.location.href = `/dashboard/edit/product/:${product.id}`
                 }}
               >
@@ -141,7 +134,7 @@ const AllProducts = () => {
     const [rowSelection, setRowSelection] = useState({})
 
 
-    const { data: product = [], isLoading } = useSWR<Product>(`store/product/list/`, fetcher)
+    const { data: product = [], isLoading } = useSWR(`store/product/list/`, fetcher)
     
      
     const table = useReactTable({

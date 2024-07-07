@@ -30,6 +30,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       )
         return;
       setSidebarOpen(false);
+      setSidebarExpanded(null)
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
