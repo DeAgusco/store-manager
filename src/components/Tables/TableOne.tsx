@@ -1,125 +1,74 @@
-import { BRAND } from '@/types/brand';
-import BrandOne from '@/assets/images/brand/brand-01.svg';
-import BrandTwo from '@/assets/images/brand/brand-02.svg';
-import BrandThree from '@/assets/images/brand/brand-03.svg';
-import BrandFour from '@/assets/images/brand/brand-04.svg';
-import BrandFive from '@/assets/images/brand/brand-05.svg';
-
-const brandData: BRAND[] = [
-  {
-    logo: BrandOne,
-    name: 'Google',
-    visitors: 3.5,
-    revenues: '5,768',
-    sales: 590,
-    conversion: 4.8,
-  },
-  {
-    logo: BrandTwo,
-    name: 'Twitter',
-    visitors: 2.2,
-    revenues: '4,635',
-    sales: 467,
-    conversion: 4.3,
-  },
-  {
-    logo: BrandThree,
-    name: 'Github',
-    visitors: 2.1,
-    revenues: '4,290',
-    sales: 420,
-    conversion: 3.7,
-  },
-  {
-    logo: BrandFour,
-    name: 'Vimeo',
-    visitors: 1.5,
-    revenues: '3,580',
-    sales: 389,
-    conversion: 2.5,
-  },
-  {
-    logo: BrandFive,
-    name: 'Facebook',
-    visitors: 3.5,
-    revenues: '6,768',
-    sales: 390,
-    conversion: 4.2,
-  },
-];
+import useSWR from 'swr';
+import { fetcher } from '@/services/UpdateItemService';
+import { Activity } from '@/types/activities';
 
 const TableOne = () => {
+  const { data: activities = [] } = useSWR<Activity[]>(`store/recent-activity/`, fetcher) 
+  
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        Top Channels
-      </h4>
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+         Recent Activities
+       </h4>
+ 
+       <div className="flex flex-col">
+         <div className="flex flex-row items-center justify-center rounded-sm bg-gray-2 dark:bg-meta-4 ">
+           <div className="p-2.5 text-center xl:p-5">
+             <h5 className="text-sm font-medium capitalize xsm:text-base">
+               Product
+             </h5>
+           </div>
+           <div className="p-2.5 text-center xl:p-5">
+             <h5 className="text-sm font-medium capitalize xsm:text-base">
+               Activity 
+             </h5>
+           </div>
+           <div className="p-2.5 text-center xl:p-5">
+             <h5 className="text-sm font-medium capitalize xsm:text-base">
+              employee
+             </h5>
+           </div>
 
-      <div className="flex flex-col">
-        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-          <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Source
-            </h5>
-          </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Visitors
-            </h5>
-          </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Revenues
-            </h5>
-          </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Sales
-            </h5>
-          </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Conversion
-            </h5>
-          </div>
-        </div>
+           <div className="p-2.5 text-center xl:p-5">
+             <h5 className="text-sm font-medium capitalize xsm:text-base">
+              shop
+             </h5>
+           </div>
+         </div>
+ 
+         {activities.length === 0 ? (
+           <div className="flex items-center justify-center p-4.5 xl:p-6">
+             <p className="text-black dark:text-white">No recent activities found.</p>
+           </div>
+         ) : (
+           activities.map((item, key) => (
+             <div
+               className={`flex flex-row items-center text-center justify-evenly ${
+                 key === activities.length - 1
+                   ? ''
+                   : 'border-b border-stroke dark:border-strokedark'
+               }`}
+               key={key}
+             >
+               <div className="flex items-center justify-center p-2.5 xl:p-5">
+                 <p className="text-black dark:text-white">{item?.product?.name}</p>
+               </div>
+     
+               <div className="flex items-center justify-center p-2.5 xl:p-5">
+                 <p className={`${item?.activity === 'Product Added' ? 'text-meta-3' : 'text-red-400'}`}>{item?.activity}</p>
+               </div>
+     
+               <div className="items-center justify-center p-2.5 sm:flex xl:p-5">
+                 <p className="text-black dark:text-white">{item?.employee || 'Null'}</p>
+               </div>
 
-        {brandData.map((brand, key) => (
-          <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
-              key === brandData.length - 1
-                ? ''
-                : 'border-b border-stroke dark:border-strokedark'
-            }`}
-            key={key}
-          >
-            <div className="flex items-center gap-3 p-2.5 xl:p-5">
-              <div className="flex-shrink-0">
-                <img src={brand.logo} alt="Brand" />
-              </div>
-              <p className="hidden text-black dark:text-white sm:block">
-                {brand.name}
-              </p>
-            </div>
-
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{brand.visitors}K</p>
-            </div>
-
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-meta-3">${brand.revenues}</p>
-            </div>
-
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-black dark:text-white">{brand.sales}</p>
-            </div>
-
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-meta-5">{brand.conversion}%</p>
-            </div>
-          </div>
-        ))}
-      </div>
+               <div className="items-center justify-center p-2.5 sm:flex xl:p-5">
+                 <p className="text-black dark:text-white">{item?.shop?.name}</p>
+               </div>
+             </div>
+           ))
+         )}
+       </div>
     </div>
   );
 };

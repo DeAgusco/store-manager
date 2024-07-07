@@ -12,19 +12,14 @@ import Loader from '@/common/Loader';
 
 
 const Dashboard = () => {
-  const shopID = localStorage.getItem('shopID');
-
-  //const { data: dashboard, isLoading } = useSWR<unknown>(`store/detail/${shopID}/`, fetcher)
   const { data: analytics, isLoading: loadingAnalytics } = useSWR<analytics>(`store/analytics/`, fetcher) 
-
-  console.log(analytics);
 
   return (
     <DefaultLayout>
        {loadingAnalytics ? (<Loader/>) : (
       <>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Cost" total={`GHC ${analytics?.total_cost}`} rate="0.43%" levelUp>
+        <CardDataStats title="Total Cost" total={`GHC ${analytics?.total_cost}`}>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -43,7 +38,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Sales" total={`GHC ${analytics?.total_sales}`}  rate="4.35%" levelUp>
+        <CardDataStats title="Total Sales" total={`GHC ${analytics?.total_sales}`}>
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -66,7 +61,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Products" total={`GHC ${analytics?.total_products}`} rate="2.59%"  levelUp>
+        <CardDataStats title="Total Products" total={`${analytics?.total_products}`}>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -85,7 +80,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Employee Sales" total={`GHC ${analytics?.total_sales_by_employee}`} rate="0.95%" levelDown>
+        <CardDataStats title="Total Employee Sales" total={`GHC ${analytics?.total_sales_by_employee}`}>
           <svg
             className="fill-primary dark:fill-white"
             width="22"

@@ -28,13 +28,14 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod"
 import toast, { Toaster } from 'react-hot-toast';
-import { ClipLoader } from "react-spinners";
 import { useState } from "react";
 import { updateProductRequest, deleteProductRequest, fetcher } from '@/services/UpdateItemService'
-import useSWR, { useSWRConfig, preload } from "swr"
+import useSWR, { useSWRConfig } from "swr"
 import useSWRMutation from "swr/mutation"
 import { updateProductType } from '@/types/User'
 import Loader from '@/common/Loader';
+import AlertModal from '@/components/ModalAlert'
+import { ClipLoader } from "react-spinners";
 
 
 const formSchema = z.object({
@@ -113,6 +114,9 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       await trigger({ ...payLoad })
       await mutate("shop/product/update")
       toast.success("Product Edited successfully!");
+      setTimeout(() => {
+        window.location.href = '/dashboard/allproduct';
+      }, 1000);
     } catch (error) {
       toast.error("Failed to Edit product " + (error.response?.data?.details));
       throw error
@@ -224,17 +228,7 @@ const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                       <p>Update</p>
                     )}
                   </Button>
-                  <Button 
-                    type='button'
-                    onClick={deleteProduct} 
-                    variant="outline" 
-                    className='w-11/12 transition duration-700 ease-in-out hover:scale-110 bg-red-400 text-white'>
-                     {deleteLoading ? (
-                       <ClipLoader size={30} color="#f87171" />
-                    ) : (
-                      <p>Delete</p>
-                    )}
-                  </Button>
+                  <AlertModal deleteLoading={deleteLoading} deleteProduct={deleteProduct} />
                  </div>
               </form>
             </Form>

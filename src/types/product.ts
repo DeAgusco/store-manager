@@ -1,8 +1,10 @@
+import { Shop } from "./shop";
+
 export type Product = {
-  image: string;
+  id: number;
+  shop: Shop;
   name: string;
-  category: string;
-  price: number;
-  sold: number;
-  profit: number;
+  price: string;
+  quantity: number;
+  date_of_creation: string;
 };
