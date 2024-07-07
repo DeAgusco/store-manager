@@ -80,7 +80,7 @@ const Dashboard = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Employee Sales" total={`GHC ${analytics?.total_sales_by_employee}`}>
+        <CardDataStats title="Total Inventory" total={`GHC ${analytics?.total_inventory}`}>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
