@@ -14,7 +14,7 @@ const options: ApexOptions = {
     fontFamily: 'Satoshi, sans-serif',
     type: 'donut',
   },
-  colors: ['#3C50E0', '#6577F3', '#8FD0EF', '#0FADCF'],
+  colors: ['#E0443E', '#4CAf50', '#357ABD', '#FFC107'],
   labels: ['Total Cost', 'Total Sales', 'Total Products', 'Total Inventory'],
   legend: {
     show: false,
@@ -83,7 +83,7 @@ const [state, setState] = useState<ChartThreeState>({
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Visitors Analytics
+            Shop Analytics
           </h5>
         </div>
         <div>
