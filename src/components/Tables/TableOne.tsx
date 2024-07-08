@@ -38,7 +38,7 @@ const TableOne = () => {
  
          {activities.length === 0 ? (
            <div className="flex items-center justify-center p-4.5 xl:p-6">
-             <p className="text-black dark:text-white">No recent activities found.</p>
+             <p className="text-black dark:text-white">No Activity For Today</p>
            </div>
          ) : (
            activities.map((item, key) => (
