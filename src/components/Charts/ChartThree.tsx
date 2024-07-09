@@ -14,7 +14,7 @@ const options: ApexOptions = {
     fontFamily: 'Satoshi, sans-serif',
     type: 'donut',
   },
-  colors: ['#3C50E0', '#6577F3', '#8FD0EF', '#0FADCF'],
+  colors: ['#E0443E', '#4CAf50', '#357ABD', '#FFC107'],
   labels: ['Total Cost', 'Total Sales', 'Total Products', 'Total Inventory'],
   legend: {
     show: false,
