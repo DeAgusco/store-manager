@@ -103,7 +103,7 @@ const [state, setState] = useState<ChartThreeState>({
       <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
         <div className="sm:w-1/2 w-full px-8">
           <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
+            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#E0443E]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> Total Cost </span>
               {/* <span> 65% </span> */}
@@ -112,7 +112,7 @@ const [state, setState] = useState<ChartThreeState>({
         </div>
         <div className="sm:w-1/2 w-full px-8">
           <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
+            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#4CAf50]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> Total Sales </span>
               {/* <span> 34% </span> */}
@@ -121,7 +121,7 @@ const [state, setState] = useState<ChartThreeState>({
         </div>
         <div className="sm:w-1/2 w-full px-8">
           <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
+            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#357ABD]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span>Total Products</span>
               {/* <span> 45% </span> */}
@@ -130,7 +130,7 @@ const [state, setState] = useState<ChartThreeState>({
         </div>
         <div className="sm:w-1/2 w-full px-8">
           <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
+            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#FFC107]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span>Total Inventory</span>
               {/* <span> 12% </span> */}
