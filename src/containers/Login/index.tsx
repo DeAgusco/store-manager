@@ -146,7 +146,7 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter password"  {...field} />
+                      <Input type='password' placeholder="Enter password"  {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
