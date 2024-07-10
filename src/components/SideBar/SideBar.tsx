@@ -1,5 +1,8 @@
+import { fetcher } from '@/services/UpdateItemService';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useSWRConfig } from 'swr';
+import useSWRMutation from 'swr/mutation';
 
 
 interface SidebarProps {
@@ -10,6 +13,10 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+
+  const { trigger: logout } = useSWRMutation("employee/logout/", fetcher)
+  const { mutate } = useSWRConfig()
+
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -55,11 +62,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user_name")
-    localStorage.removeItem("user_token")
-    localStorage.removeItem("productID")
-    window.location.href = '/'
+  const handleLogout = async () => {
+      localStorage.removeItem("user_name")
+      localStorage.removeItem("user_token")
+      localStorage.removeItem("productID")
+      await logout();
+      await mutate("employee/logout/");
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
 }
 
   return (
